@@ -7,7 +7,7 @@ import csv
 
 regex = re.compile('[A-Z]\w+')
 names = []
-names.append(['first name','last name','email 1', 'email 2'])
+names.append(['First Name','Last Name','Email'])
 path = './files'
 files = os.listdir(path)
 #print(files)
@@ -27,20 +27,28 @@ for file in files:
             trimed = content[:len(content)-2]
             rx = regex.findall(trimed)
             fl = [rx[0],rx[-1]]
+
+            #not a deep copy! 
+            #fl2 = fl
+
             slug = '.'.join(fl)
             email_1 =  slug+'@nyulangone.org'
             email_2 =  slug+'@nyumc.org'
             #print('raw',trimed,'fl',fl,'email 1:',email_1,'email 2:',email_2)
-            fl.append(email_1)
-            fl.append(email_2)
+            #contact1 = [fl[0],fl[1],email_1]
+            #contact2 = [fl[0],fl[1],email_2]
+            #print('Email 1:',contact1)
+            #print('Email 2:',contact2)
             #print(fl)
-            names.append(fl)
+            names.append([fl[0],fl[1],email_1])
+            names.append([fl[0],fl[1],email_2])
 
 output_file = open('results.csv','w',newline='')
 output_writer = csv.writer(output_file)
 for name in names:
     output_writer.writerow(name)
 output_file.close()
+
 
 # Target : <span class="department-leadership__name">Shengping Zou, </span>
 # Download all web pages as full html into the folder
